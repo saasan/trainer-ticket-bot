@@ -1,8 +1,11 @@
 {
   "browser": true,
   "globals": {
-    "node": false
+    "it": false,
+    "describe": false
   },
+
+  "node" : true,
 
   "esnext": true,
   "bitwise": true,
