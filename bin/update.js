@@ -2,6 +2,7 @@
   'use strict';
 
   var Twit = require('twit');
+  var sprintf = require('sprintf-js').sprintf;
   var locale = require('./ja.js');
 
   var SEPTEMBER = 8,
@@ -80,7 +81,7 @@
         var group = TIME_TABLE[hours.toString()];
         if (group != null) {
           var groupString = locale.groupTable[group][pattern];
-          message = groupString;
+          message = sprintf(locale.startSoon, groupString);
         }
       }
 
