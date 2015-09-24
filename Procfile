@@ -1,1 +1,1 @@
-worker: node bin/update.js
+worker: node bin/update
