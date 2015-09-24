@@ -4,11 +4,6 @@
   "dependencies": {
     "twit": "^2.1.0"
   },
-  "devDependencies": {
-    "del": "^1.2.0",
-    "gulp": "^3.9.0",
-    "gulp-concat": "^2.5.2"
-  },
   "engines": {
     "node": "4.0.0"
   },
