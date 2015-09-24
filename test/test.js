@@ -2,7 +2,6 @@
 
 var assert = require('assert');
 var update = require('../bin/update.js');
-var locale = require('../bin/ja.js');
 
 var SEPTEMBER = 8;
 

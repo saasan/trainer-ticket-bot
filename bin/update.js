@@ -37,8 +37,10 @@
       var message = this.createMessage(new Date());
 
       if (message != null) {
-        T.post('statuses/update', { status: message }, function(err, data, response) {
-          console.log(data);
+        T.post('statuses/update', { status: message }, function(err /*, data, response */) {
+          if (err) {
+            console.error(err);
+          }
         });
       }
     },
@@ -71,7 +73,7 @@
           pattern = this.getPattern(date),
           hours = this.roundHours(date).getHours();
 
-      if (hours == 7) {
+      if (hours === 7) {
         message = locale.scheduleMessages[pattern];
       }
       else {
@@ -81,6 +83,8 @@
           message = groupString;
         }
       }
+
+      console.log(date.toString(), ' pattern: ', pattern, ' ', message);
 
       return message;
     }
