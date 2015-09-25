@@ -32,4 +32,4 @@ exports.groupTable = [
   ['D、H', 'C、G', 'B、F', 'A、E']
 ];
 
-exports.startSoon = '%sグループのトレチケタイムがもうすぐ始まります！';
+exports.startSoon = '【%(hours)d時】から【%(group)s】グループのトレチケタイムが始まります。';

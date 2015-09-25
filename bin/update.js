@@ -81,7 +81,7 @@
         var group = TIME_TABLE[hours.toString()];
         if (group != null) {
           var groupString = locale.groupTable[group][pattern];
-          message = sprintf(locale.startSoon, groupString);
+          message = sprintf(locale.startSoon, { hours: hours, group: groupString });
         }
       }
 
