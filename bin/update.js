@@ -75,7 +75,7 @@
           hours = this.roundHours(date).getHours();
 
       if (hours === 7) {
-        message = locale.scheduleMessages[pattern];
+        message = locale.scheduleMessages[pattern] + locale.weekDayMessages[date.getDay()];
       }
       else {
         var group = TIME_TABLE[hours.toString()];

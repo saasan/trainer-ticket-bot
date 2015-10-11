@@ -10,19 +10,19 @@ describe('7時', function() {
 
   it('パターンA', function () {
     message = update.createMessage(new Date(2015, SEPTEMBER, 18, 6, 45));
-    assert(message.includes('A、Eグループ：①8時、②12時、③19時'));
+    assert(message.includes('A、Eグループ：8、12、19時'));
   });
   it('パターンB', function () {
     message = update.createMessage(new Date(2015, SEPTEMBER, 19, 6, 55));
-    assert(message.includes('A、Eグループ：①9時、②13時、③20時'));
+    assert(message.includes('A、Eグループ：9、13、20時'));
   });
   it('パターンC', function () {
     message = update.createMessage(new Date(2015, SEPTEMBER, 20, 7, 5));
-    assert(message.includes('A、Eグループ：①10時、②14時、③21時'));
+    assert(message.includes('A、Eグループ：10、14、21時'));
   });
   it('パターンD', function () {
     message = update.createMessage(new Date(2015, SEPTEMBER, 21, 7, 15));
-    assert(message.includes('A、Eグループ：①11時、②15時、③22時'));
+    assert(message.includes('A、Eグループ：11、15、22時'));
   });
 });
 
