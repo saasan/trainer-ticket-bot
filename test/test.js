@@ -24,6 +24,34 @@ describe('7時', function() {
     message = update.createMessage(new Date(2015, SEPTEMBER, 21, 7, 15));
     assert(message.includes('A、Eグループ：11、15、22時'));
   });
+  it('日曜日', function () {
+    message = update.createMessage(new Date(2015, SEPTEMBER, 20, 7, 5));
+    assert(message.includes('ススメオトメ：全タイプ\nボーナスデー：共通アイテム&マニー2倍'));
+  });
+  it('月曜日', function () {
+    message = update.createMessage(new Date(2015, SEPTEMBER, 21, 7, 15));
+    assert(message.includes('ススメオトメ：全タイプ\nボーナスデー：全属性アイテム'));
+  });
+  it('火曜日', function () {
+    message = update.createMessage(new Date(2015, SEPTEMBER, 22, 7, 15));
+    assert(message.includes('ススメオトメ：全タイプ\nボーナスデー：共通アイテム(ドレス、靴)'));
+  });
+  it('水曜日', function () {
+    message = update.createMessage(new Date(2015, SEPTEMBER, 23, 7, 15));
+    assert(message.includes('ススメオトメ：キュート\nボーナスデー：キュートアイテム'));
+  });
+  it('木曜日', function () {
+    message = update.createMessage(new Date(2015, SEPTEMBER, 24, 7, 15));
+    assert(message.includes('ススメオトメ：クール\nボーナスデー：クールアイテム'));
+  });
+  it('金曜日', function () {
+    message = update.createMessage(new Date(2015, SEPTEMBER, 25, 7, 15));
+    assert(message.includes('ススメオトメ：パッション\nボーナスデー：パッションアイテム'));
+  });
+  it('土曜日', function () {
+    message = update.createMessage(new Date(2015, SEPTEMBER, 26, 7, 15));
+    assert(message.includes('ススメオトメ：全タイプ\nボーナスデー：全属性アイテム&マニー2倍'));
+  });
 });
 
 describe('8時', function() {
