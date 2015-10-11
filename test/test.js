@@ -305,3 +305,28 @@ describe('22時', function() {
     assert(message.includes('A、E'));
   });
 });
+
+describe('イベントメッセージ', function() {
+  var message;
+
+  it('4日目', function () {
+    message = update.createMessage(new Date(2015, 9, 12, 22, 0));
+    assert(message.includes('イベント「シンデレラキャラバン」4日目：キュート楽曲出現率アップ\n'));
+  });
+  it('5日目', function () {
+    message = update.createMessage(new Date(2015, 9, 13, 22, 0));
+    assert(message.includes('イベント「シンデレラキャラバン」5日目：クール楽曲出現率アップ\n'));
+  });
+  it('6日目', function () {
+    message = update.createMessage(new Date(2015, 9, 14, 22, 0));
+    assert(message.includes('イベント「シンデレラキャラバン」6日目：パッション楽曲出現率アップ\n'));
+  });
+  it('7日目', function () {
+    message = update.createMessage(new Date(2015, 9, 15, 22, 0));
+    assert(message.includes('イベント「シンデレラキャラバン」7日目：キュート楽曲出現率アップ\n'));
+  });
+  it('最終日', function () {
+    message = update.createMessage(new Date(2015, 9, 16, 22, 0));
+    assert(message.includes('イベント「シンデレラキャラバン」最終日(20:59まで)：クール楽曲出現率アップ\n'));
+  });
+});

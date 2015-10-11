@@ -79,9 +79,15 @@
       }
       else {
         var group = TIME_TABLE[hours.toString()];
+        var eventMessage = (locale.eventMessages[date.getMonth() + 1][date.getDate()] || '');
+
         if (group != null) {
           var groupString = locale.groupTable[group][pattern];
-          message = sprintf(locale.startSoon, { hours: hours, group: groupString });
+          message = sprintf(locale.startSoon, {
+            hours: hours,
+            group: groupString,
+            eventMessage: eventMessage
+          });
         }
       }
 

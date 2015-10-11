@@ -1,4 +1,17 @@
 var url = 'http://saasan.github.io/imas/trainer-ticket-time/';
+var eventMessages = [];
+
+for (var i = 1; i <= 12; i++) {
+  eventMessages[i] = [];
+}
+
+eventMessages[10][12] = 'イベント「シンデレラキャラバン」4日目：キュート楽曲出現率アップ\n';
+eventMessages[10][13] = 'イベント「シンデレラキャラバン」5日目：クール楽曲出現率アップ\n';
+eventMessages[10][14] = 'イベント「シンデレラキャラバン」6日目：パッション楽曲出現率アップ\n';
+eventMessages[10][15] = 'イベント「シンデレラキャラバン」7日目：キュート楽曲出現率アップ\n';
+eventMessages[10][16] = 'イベント「シンデレラキャラバン」最終日(20:59まで)：クール楽曲出現率アップ\n';
+
+exports.eventMessages = eventMessages;
 
 exports.scheduleMessages = [
 // パターンA
@@ -40,7 +53,7 @@ exports.groupTable = [
 
 exports.startSoon =
 `【%(hours)d時】から【%(group)s】グループのトレチケタイムが始まります。
-今日のトレチケタイム：` + url;
+%(eventMessage)s今日のトレチケタイム：` + url;
 
 exports.weekDayMessages = [
   /* 日 */ 'ススメオトメ：全タイプ\nボーナスデー：共通アイテム&マニー2倍\n' + url,
