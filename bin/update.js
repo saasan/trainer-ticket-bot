@@ -79,7 +79,14 @@
       }
       else {
         var group = TIME_TABLE[hours.toString()];
-        var eventMessage = (locale.eventMessages[date.getMonth() + 1][date.getDate()] || '');
+        var eventMessage = locale.eventMessages[date.getMonth() + 1][date.getDate()];
+
+        if (eventMessage == null) {
+          eventMessage = '';
+        }
+        else {
+          eventMessage += '\n';
+        }
 
         if (group != null) {
           var groupString = locale.groupTable[group][pattern];
