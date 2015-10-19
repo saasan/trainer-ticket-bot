@@ -5,7 +5,15 @@ for (var i = 1; i <= 12; i++) {
   eventMessages[i] = [];
 }
 
-// eventMessages[10][12] = 'イベント「シンデレラキャラバン」4日目：キュート楽曲出現率アップ\n';
+eventMessages[10][19] = 'イベント「Nation Blue」終了まであと8日(10/27 20:59まで)';
+eventMessages[10][20] = 'イベント「Nation Blue」終了まであと7日(10/27 20:59まで)';
+eventMessages[10][21] = 'イベント「Nation Blue」終了まであと6日(10/27 20:59まで)';
+eventMessages[10][22] = 'イベント「Nation Blue」終了まであと5日(10/27 20:59まで)';
+eventMessages[10][23] = 'イベント「Nation Blue」終了まであと4日(10/27 20:59まで)';
+eventMessages[10][24] = 'イベント「Nation Blue」終了まであと3日(10/27 20:59まで)';
+eventMessages[10][25] = 'イベント「Nation Blue」終了まであと2日(10/27 20:59まで)';
+eventMessages[10][26] = 'イベント「Nation Blue」終了まであと1日(10/27 20:59まで)';
+eventMessages[10][27] = 'イベント「Nation Blue」最終日(20:59まで)';
 
 exports.eventMessages = eventMessages;
 
