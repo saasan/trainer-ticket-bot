@@ -5,9 +5,12 @@
   var sprintf = require('sprintf-js').sprintf;
   var locale = require('./ja.js');
   var month = require('./month.js');
+  var event = require('./event.js');
 
   var MS_SEPTEMBER7 = (new Date(2015, month.SEPTEMBER, 7)).getTime(),
-      MS_ONE_DAY = 24 * 60 * 60 * 1000;
+      MS_ONE_MINUTE = 60 * 1000,
+      MS_ONE_HOUR = MS_ONE_MINUTE * 60,
+      MS_ONE_DAY = MS_ONE_HOUR * 24;
 
   var TIME_TABLE = {
     '8': 0,
@@ -55,18 +58,63 @@
     },
 
     roundHours: function(date) {
-      date.setSeconds(0);
-      date.setMilliseconds(0);
+      var roundDate = new Date(date.getTime());
+      roundDate.setSeconds(0);
+      roundDate.setMilliseconds(0);
 
-      var minutes = date.getMinutes();
+      var minutes = roundDate.getMinutes();
       if (minutes >= 30) {
-        date.setMinutes(60);
+        roundDate.setMinutes(60);
       }
       else {
-        date.setMinutes(0);
+        roundDate.setMinutes(0);
       }
 
-      return date;
+      return roundDate;
+    },
+
+    createEventMessage: function(date) {
+      var msDate = date.getTime(),
+          msUntil = event.until.getTime(),
+          msRoundDate = this.roundHours(date).getTime(),
+          delta, left, template, eventMessage;
+
+      // 終了時刻表示用にevent.untilの1分前を計算
+      var until = new Date(msUntil);
+      until.setMinutes(until.getMinutes() - 1);
+
+      // 残り24時間の時都合がいいので、とりあえず毎正時のmsRoundDateで計算
+      delta = msUntil - msRoundDate;
+
+      // 残り1日より多い
+      if (MS_ONE_DAY < delta) {
+        left = Math.floor(delta / MS_ONE_DAY);
+        template = locale.countdownDay;
+      }
+      // 残り24時間以下1時間以上
+      else if (MS_ONE_HOUR <= delta) {
+        left = Math.floor(delta / MS_ONE_HOUR);
+        template = locale.countdownHour;
+      }
+      // 1時間未満
+      else {
+        // 正時のmsRoundDateではまずいのでdeltaを計算し直す
+        delta = msUntil - msDate;
+
+        left = Math.ceil(delta / MS_ONE_MINUTE);
+        template = locale.countdownMinute;
+      }
+
+      eventMessage = sprintf(template + '\n', {
+        eventName: event.name,
+        left: left,
+        month: locale.month[until.getMonth()],
+        date: until.getDate(),
+        hour: until.getHours(),
+        minute: until.getMinutes()
+      });
+
+      return eventMessage;
     },
 
     createMessage: function(date) {
@@ -79,13 +127,10 @@
       }
       else {
         var group = TIME_TABLE[hours.toString()];
-        var eventMessage = locale.eventMessages[date.getMonth() + 1][date.getDate()];
+        var eventMessage = '';
 
-        if (eventMessage == null) {
-          eventMessage = '';
-        }
-        else {
-          eventMessage += '\n';
+        if (date.getTime() < event.until.getTime()) {
+          eventMessage = this.createEventMessage(date);
         }
 
         if (group != null) {

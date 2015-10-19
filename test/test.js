@@ -309,39 +309,55 @@ describe('イベントメッセージ', function() {
   var message;
 
   it('あと8日', function () {
-    message = update.createMessage(new Date(2015, month.OCTOBER, 19, 8, 0));
+    message = update.createMessage(new Date(2015, month.OCTOBER, 19, 20, 50));
     assert(message.includes('イベント「Nation Blue」終了まであと8日(10/27 20:59まで)'));
   });
   it('あと7日', function () {
-    message = update.createMessage(new Date(2015, month.OCTOBER, 20, 8, 0));
+    message = update.createMessage(new Date(2015, month.OCTOBER, 20, 20, 50));
     assert(message.includes('イベント「Nation Blue」終了まであと7日(10/27 20:59まで)'));
   });
   it('あと6日', function () {
-    message = update.createMessage(new Date(2015, month.OCTOBER, 21, 8, 0));
+    message = update.createMessage(new Date(2015, month.OCTOBER, 21, 20, 50));
     assert(message.includes('イベント「Nation Blue」終了まであと6日(10/27 20:59まで)'));
   });
   it('あと5日', function () {
-    message = update.createMessage(new Date(2015, month.OCTOBER, 22, 8, 0));
+    message = update.createMessage(new Date(2015, month.OCTOBER, 22, 20, 50));
     assert(message.includes('イベント「Nation Blue」終了まであと5日(10/27 20:59まで)'));
   });
   it('あと4日', function () {
-    message = update.createMessage(new Date(2015, month.OCTOBER, 23, 8, 0));
+    message = update.createMessage(new Date(2015, month.OCTOBER, 23, 20, 50));
     assert(message.includes('イベント「Nation Blue」終了まであと4日(10/27 20:59まで)'));
   });
   it('あと3日', function () {
-    message = update.createMessage(new Date(2015, month.OCTOBER, 24, 8, 0));
+    message = update.createMessage(new Date(2015, month.OCTOBER, 24, 20, 50));
     assert(message.includes('イベント「Nation Blue」終了まであと3日(10/27 20:59まで)'));
   });
   it('あと2日', function () {
-    message = update.createMessage(new Date(2015, month.OCTOBER, 25, 8, 0));
+    message = update.createMessage(new Date(2015, month.OCTOBER, 25, 20, 50));
     assert(message.includes('イベント「Nation Blue」終了まであと2日(10/27 20:59まで)'));
   });
   it('あと1日', function () {
-    message = update.createMessage(new Date(2015, month.OCTOBER, 26, 8, 0));
+    message = update.createMessage(new Date(2015, month.OCTOBER, 26, 19, 50));
     assert(message.includes('イベント「Nation Blue」終了まであと1日(10/27 20:59まで)'));
   });
-  it('最終日', function () {
-    message = update.createMessage(new Date(2015, month.OCTOBER, 27, 8, 0));
-    assert(message.includes('イベント「Nation Blue」最終日(20:59まで)'));
+  it('あと24時間', function () {
+    message = update.createMessage(new Date(2015, month.OCTOBER, 26, 20, 50));
+    assert(message.includes('イベント「Nation Blue」終了まであと24時間(10/27 20:59まで)'));
+  });
+  it('あと12時間', function () {
+    message = update.createMessage(new Date(2015, month.OCTOBER, 27, 8, 50));
+    assert(message.includes('イベント「Nation Blue」終了まであと12時間(10/27 20:59まで)'));
+  });
+  it('あと1時間', function () {
+    message = update.createMessage(new Date(2015, month.OCTOBER, 27, 19, 50));
+    assert(message.includes('イベント「Nation Blue」終了まであと1時間(10/27 20:59まで)'));
+  });
+  it('あと10分', function () {
+    message = update.createMessage(new Date(2015, month.OCTOBER, 27, 20, 50, 10));
+    assert(message.includes('イベント「Nation Blue」終了まであと10分くらい(10/27 20:59まで)'));
+  });
+  it('終了', function () {
+    message = update.createMessage(new Date(2015, month.OCTOBER, 27, 21, 50));
+    assert(!message.includes('イベント'));
   });
 });
