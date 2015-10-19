@@ -4,9 +4,9 @@
   var Twit = require('twit');
   var sprintf = require('sprintf-js').sprintf;
   var locale = require('./ja.js');
+  var month = require('./month.js');
 
-  var SEPTEMBER = 8,
-      MS_SEPTEMBER7 = (new Date(2015, SEPTEMBER, 7)).getTime(),
+  var MS_SEPTEMBER7 = (new Date(2015, month.SEPTEMBER, 7)).getTime(),
       MS_ONE_DAY = 24 * 60 * 60 * 1000;
 
   var TIME_TABLE = {
