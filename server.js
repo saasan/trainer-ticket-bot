@@ -11,7 +11,7 @@
   // サーバーの動作開始時間
   var START_TIME = 6;
   // サーバーの動作終了時間
-  var END_TIME = 22;
+  var STOP_TIME = 22;
 
   process.on('exit', function() {
     console.log('========== process Exit ==========');
@@ -60,7 +60,7 @@
    * @return {boolean} 時間内ならtrue。
    */
   function isInTime(hours) {
-    return (START_TIME <= hours && hours < END_TIME);
+    return (START_TIME <= hours && hours < STOP_TIME);
   }
 
   // ダミーのhttpサーバーを動かしておく
