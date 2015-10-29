@@ -9,6 +9,10 @@
   "engines": {
     "node": "4.0.0"
   },
+  "scripts": {
+    "start": "heroku local web",
+    "test": "mocha"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/saasan/trainer-ticket-bot.git"
