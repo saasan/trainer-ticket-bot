@@ -13,47 +13,19 @@
   // サーバーの動作終了時間
   var STOP_TIME = 22;
 
-  process.on('exit', function() {
-    console.log('========== process Exit ==========');
-  });
+  var jobHourlyTweet, jobDailyTweet, jobCurl;
 
   function curl(url) {
     console.log('========== function curl ==========');
     exec('curl ' + url, function(){});
   }
 
-  // 毎時50分にお知らせツイートする
-  var jobHourlyTweet = schedule.scheduleJob('50 7-14,18-21 * * *', function() {
-    twitter.tweetHourlyMessage();
-  });
-
-  // 毎日7時30分にお知らせツイートする
-  var jobDailyTweet = schedule.scheduleJob('30 7 * * *', function() {
-    twitter.tweetDailyMessage();
-  });
-
-  // 15分毎にcurlで自分を叩き起こす
-  var jobCurl = schedule.scheduleJob('*/15 * * * *', function() {
-    var hours = (new Date()).getHours();
-
-    if (isInTime(hours)) {
-      // 時間内なら自分を叩く
-      curl(KEEP_ALIVE_URL);
-    }
-    else {
-      // それ以外は終了
-      exit();
-    }
-  });
-
-  // ジョブをキャンセルして終了
-  function exit() {
-    console.log('========== function exit ==========');
-    jobCurl.cancel();
+  // ジョブをキャンセル
+  function cancelJobs() {
+    console.log('========== function cancelJobs ==========');
     jobHourlyTweet.cancel();
     jobDailyTweet.cancel();
-    // 自殺すると再起動されるので放置
-    // process.exit();
+    jobCurl.cancel();
   }
 
   /**
@@ -64,6 +36,36 @@
     return (START_TIME <= hours && hours < STOP_TIME);
   }
 
+  process.on('exit', function() {
+    console.log('========== process.on Exit ==========');
+    // ジョブをキャンセル
+    cancelJobs();
+  });
+
+  // 毎時50分にお知らせツイートする
+  jobHourlyTweet = schedule.scheduleJob('50 7-14,18-21 * * *', function() {
+    twitter.tweetHourlyMessage();
+  });
+
+  // 毎日7時30分にお知らせツイートする
+  jobDailyTweet = schedule.scheduleJob('30 7 * * *', function() {
+    twitter.tweetDailyMessage();
+  });
+
+  // 15分毎にcurlで自分を叩き起こす
+  jobCurl = schedule.scheduleJob('*/15 * * * *', function() {
+    var hours = (new Date()).getHours();
+
+    if (isInTime(hours)) {
+      // 時間内なら自分を叩く
+      curl(KEEP_ALIVE_URL);
+    }
+    else {
+      // それ以外はジョブをキャンセル
+      cancelJobs();
+    }
+  });
+
   // ダミーのhttpサーバーを動かしておく
   http.createServer(function(request, response) {
     response.writeHead(404, {'Content-Type': 'text/html'});
@@ -71,8 +73,8 @@
 
     var hours = (new Date()).getHours();
     if (!isInTime(hours)) {
-      // 時間外なら終了
-      exit();
+      // 時間外ならジョブをキャンセル
+      cancelJobs();
     }
   }).listen(process.env.PORT);
 })();
