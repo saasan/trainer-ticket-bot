@@ -50,7 +50,6 @@
 
   // ダミーのhttpサーバーを動かしておく
   http.createServer(function(request, response) {
-    console.log(request.url);
     response.writeHead(404, {'Content-Type': 'text/html'});
     response.end('<!DOCTYPE html><head><title>404 Not Found</title></head><body><h1>404 Not Found</h1></body>\n');
 
