@@ -89,16 +89,19 @@
 
     createEventMessage: function(date) {
       var msDate = date.getTime(),
-          msUntil = event.until.getTime(),
+          msEventDate = event.date.getTime(),
           msRoundDate = this.roundHours(date).getTime(),
           delta, left, template, eventMessage;
 
-      // 終了時刻表示用にevent.untilの1分前を計算
-      var until = new Date(msUntil);
-      until.setMinutes(until.getMinutes() - 1);
+      // メッセージ表示用の時刻
+      var until = new Date(msEventDate);
+      // 終了時刻の場合は1分前を計算
+      if (event.close) {
+        until.setMinutes(until.getMinutes() - 1);
+      }
 
       // 残り24時間の時都合がいいので、とりあえず毎正時のmsRoundDateで計算
-      delta = msUntil - msRoundDate;
+      delta = msEventDate - msRoundDate;
 
       // 残り1日より多い
       if (MS_ONE_DAY < delta) {
@@ -113,7 +116,7 @@
       // 1時間未満
       else {
         // 正時のmsRoundDateではまずいのでdeltaを計算し直す
-        delta = msUntil - msDate;
+        delta = msEventDate - msDate;
 
         left = Math.ceil(delta / MS_ONE_MINUTE);
         template = locale.countdownMinute;
@@ -142,7 +145,7 @@
           group = TIME_TABLE[hours.toString()],
           eventMessage = '';
 
-      if (date.getTime() < event.until.getTime()) {
+      if (date.getTime() < event.date.getTime()) {
         eventMessage = this.createEventMessage(date);
       }
 
