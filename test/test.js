@@ -4,51 +4,51 @@ var assert = require('assert');
 var twitter = require('../twitter.js');
 var month = require('../month.js');
 
-describe('7時', function() {
+describe('日毎', function() {
   var message;
 
   it('パターンA', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 18, 6, 45));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 18, 6, 45));
     assert(message.includes('A、Eグループ：8、12、19時'));
   });
   it('パターンB', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 19, 6, 55));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 19, 6, 55));
     assert(message.includes('A、Eグループ：9、13、20時'));
   });
   it('パターンC', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 20, 7, 5));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 20, 7, 5));
     assert(message.includes('A、Eグループ：10、14、21時'));
   });
   it('パターンD', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 21, 7, 15));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 21, 7, 15));
     assert(message.includes('A、Eグループ：11、15、22時'));
   });
   it('日曜日', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 20, 7, 5));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 20, 7, 5));
     assert(message.includes('ススメオトメ：全タイプ\nボーナスデー：共通アイテム&マニー2倍'));
   });
   it('月曜日', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 21, 7, 15));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 21, 7, 15));
     assert(message.includes('ススメオトメ：全タイプ\nボーナスデー：全属性アイテム'));
   });
   it('火曜日', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 22, 7, 15));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 22, 7, 15));
     assert(message.includes('ススメオトメ：全タイプ\nボーナスデー：共通アイテム(ドレス、靴)'));
   });
   it('水曜日', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 23, 7, 15));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 23, 7, 15));
     assert(message.includes('ススメオトメ：キュート\nボーナスデー：キュートアイテム'));
   });
   it('木曜日', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 24, 7, 15));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 24, 7, 15));
     assert(message.includes('ススメオトメ：クール\nボーナスデー：クールアイテム'));
   });
   it('金曜日', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 25, 7, 15));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 25, 7, 15));
     assert(message.includes('ススメオトメ：パッション\nボーナスデー：パッションアイテム'));
   });
   it('土曜日', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.SEPTEMBER, 26, 7, 15));
+    message = twitter.createDailyMessage(new Date(2015, month.SEPTEMBER, 26, 7, 15));
     assert(message.includes('ススメオトメ：全タイプ\nボーナスデー：全属性アイテム&マニー2倍'));
   });
 });

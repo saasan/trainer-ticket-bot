@@ -27,11 +27,16 @@
     twitter.tweetHourlyMessage();
   });
 
+  // 毎日7時30分にお知らせツイートする
+  var jobDailyTweet = schedule.scheduleJob('30 7 * * *', function() {
+    twitter.tweetDailyMessage();
+  });
+
   // 15分毎にcurlで自分を叩き起こす
   var jobCurl = schedule.scheduleJob('*/15 * * * *', function() {
     var hours = (new Date()).getHours();
 
-    if (START_TIME <= hours && hours < END_TIME) {
+    if (isInTime(hours)) {
       // 時間内なら自分を叩く
       curl(KEEP_ALIVE_URL);
     }
@@ -41,11 +46,21 @@
     }
   });
 
+  // ジョブをキャンセルして終了
   function exit() {
     console.log('========== function exit ==========');
     jobCurl.cancel();
     jobHourlyTweet.cancel();
+    jobDailyTweet.cancel();
     process.exit();
+  }
+
+  /**
+   * サーバーを実行すべき時間内か調べる
+   * @return {boolean} 時間内ならtrue。
+   */
+  function isInTime(hours) {
+    return (START_TIME <= hours && hours < END_TIME);
   }
 
   // ダミーのhttpサーバーを動かしておく
@@ -54,7 +69,7 @@
     response.end('<!DOCTYPE html><head><title>404 Not Found</title></head><body><h1>404 Not Found</h1></body>\n');
 
     var hours = (new Date()).getHours();
-    if (!(START_TIME <= hours && hours < END_TIME)) {
+    if (!isInTime(hours)) {
       // 時間外なら終了
       exit();
     }
