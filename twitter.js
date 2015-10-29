@@ -28,7 +28,7 @@
   };
 
   module.exports = {
-    tweet: function() {
+    tweetHourlyMessage: function() {
       /*jshint camelcase: false */
 
       var T = new Twit({

@@ -7,7 +7,7 @@
   var twitter = require('./twitter.js');
 
   // curlで叩き起こす自分のURL
-  var SELF_URL = 'https://tttbt.herokuapp.com/';
+  var KEEP_ALIVE_URL = 'https://tttbt.herokuapp.com/';
   // サーバーの動作開始時間
   var START_TIME = 6;
   // サーバーの動作終了時間
@@ -24,7 +24,7 @@
 
   // 毎時50分にお知らせツイートする
   var jobHourlyTweet = schedule.scheduleJob('50 7-14,18-21 * * *', function() {
-    twitter.tweet();
+    twitter.tweetHourlyMessage();
   });
 
   // 15分毎にcurlで自分を叩き起こす
@@ -32,8 +32,8 @@
     var hours = (new Date()).getHours();
 
     if (START_TIME <= hours && hours < END_TIME) {
-      // 6時台～21時台なら自分を叩く
-      curl(SELF_URL);
+      // 時間内なら自分を叩く
+      curl(KEEP_ALIVE_URL);
     }
     else {
       // それ以外は終了
