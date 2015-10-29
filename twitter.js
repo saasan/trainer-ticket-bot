@@ -38,7 +38,7 @@
         access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
       });
 
-      var message = this.createMessage(new Date());
+      var message = this.createHourlyMessage(new Date());
 
       if (message != null) {
         T.post('statuses/update', { status: message }, function(err /*, data, response */) {
@@ -117,7 +117,7 @@
       return eventMessage;
     },
 
-    createMessage: function(date) {
+    createHourlyMessage: function(date) {
       var message = null,
           pattern = this.getPattern(date),
           hours = this.roundHours(date).getHours();
