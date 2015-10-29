@@ -52,7 +52,8 @@
     jobCurl.cancel();
     jobHourlyTweet.cancel();
     jobDailyTweet.cancel();
-    process.exit();
+    // 自殺すると再起動されるので放置
+    // process.exit();
   }
 
   /**
