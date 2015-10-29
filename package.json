@@ -2,6 +2,7 @@
   "name": "trainer-ticket-bot",
   "version": "1.0.0",
   "dependencies": {
+    "node-schedule": "^0.2.9",
     "sprintf-js": "^1.0.3",
     "twit": "^2.1.0"
   },
