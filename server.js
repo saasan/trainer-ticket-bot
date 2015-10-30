@@ -6,8 +6,6 @@
   var schedule = require('node-schedule');
   var twitter = require('./twitter.js');
 
-  // curlで叩き起こす自分のURL
-  var KEEP_ALIVE_URL = 'https://tttbt.herokuapp.com/';
   // サーバーの動作開始時間
   var START_TIME = 6;
   // サーバーの動作終了時間
@@ -58,7 +56,7 @@
 
     if (isInTime(hours)) {
       // 時間内なら自分を叩く
-      curl(KEEP_ALIVE_URL);
+      curl(process.env.KEEP_ALIVE_URL);
     }
     else {
       // それ以外はジョブをキャンセル
