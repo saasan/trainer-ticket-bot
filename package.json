@@ -2,11 +2,16 @@
   "name": "trainer-ticket-bot",
   "version": "1.0.0",
   "dependencies": {
+    "node-schedule": "^0.2.9",
     "sprintf-js": "^1.0.3",
     "twit": "^2.1.0"
   },
   "engines": {
     "node": "4.0.0"
+  },
+  "scripts": {
+    "start": "heroku local web",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",

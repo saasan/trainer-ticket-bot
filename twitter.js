@@ -28,24 +28,38 @@
   };
 
   module.exports = {
-    tweet: function() {
+    tweet: function(message) {
       /*jshint camelcase: false */
 
-      var T = new Twit({
-        consumer_key:        process.env.TWITTER_CONSUMER_KEY,
-        consumer_secret:     process.env.TWITTER_CONSUMER_SECRET,
-        access_token:        process.env.TWITTER_ACCESS_TOKEN,
-        access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-      });
-
-      var message = this.createMessage(new Date());
-
       if (message != null) {
+        var T = new Twit({
+          consumer_key:        process.env.TWITTER_CONSUMER_KEY,
+          consumer_secret:     process.env.TWITTER_CONSUMER_SECRET,
+          access_token:        process.env.TWITTER_ACCESS_TOKEN,
+          access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+        });
+
         T.post('statuses/update', { status: message }, function(err /*, data, response */) {
           if (err) {
             console.error(err);
           }
         });
+      }
+    },
+
+    tweetHourlyMessage: function() {
+      var message = this.createHourlyMessage(new Date());
+
+      if (message != null) {
+        this.tweet(message);
+      }
+    },
+
+    tweetDailyMessage: function() {
+      var message = this.createDailyMessage(new Date());
+
+      if (message != null) {
+        this.tweet(message);
       }
     },
 
@@ -75,16 +89,19 @@
 
     createEventMessage: function(date) {
       var msDate = date.getTime(),
-          msUntil = event.until.getTime(),
+          msEventDate = event.date.getTime(),
           msRoundDate = this.roundHours(date).getTime(),
           delta, left, template, eventMessage;
 
-      // 終了時刻表示用にevent.untilの1分前を計算
-      var until = new Date(msUntil);
-      until.setMinutes(until.getMinutes() - 1);
+      // メッセージ表示用の時刻
+      var until = new Date(msEventDate);
+      // 終了時刻の場合は1分前を計算
+      if (event.close) {
+        until.setMinutes(until.getMinutes() - 1);
+      }
 
       // 残り24時間の時都合がいいので、とりあえず毎正時のmsRoundDateで計算
-      delta = msUntil - msRoundDate;
+      delta = msEventDate - msRoundDate;
 
       // 残り1日より多い
       if (MS_ONE_DAY < delta) {
@@ -99,7 +116,7 @@
       // 1時間未満
       else {
         // 正時のmsRoundDateではまずいのでdeltaを計算し直す
-        delta = msUntil - msDate;
+        delta = msEventDate - msDate;
 
         left = Math.ceil(delta / MS_ONE_MINUTE);
         template = locale.countdownMinute;
@@ -117,31 +134,44 @@
       return eventMessage;
     },
 
-    createMessage: function(date) {
+    /**
+     * 時間毎のメッセージを作成する
+     * @return {string} メッセージ。トレチケタイム時間外ならnull。
+     */
+    createHourlyMessage: function(date) {
       var message = null,
           pattern = this.getPattern(date),
-          hours = this.roundHours(date).getHours();
+          hours = this.roundHours(date).getHours(),
+          group = TIME_TABLE[hours.toString()],
+          eventMessage = '';
 
-      if (hours === 7) {
-        message = locale.scheduleMessages[pattern] + locale.weekDayMessages[date.getDay()];
+      if (date.getTime() < event.date.getTime()) {
+        eventMessage = this.createEventMessage(date);
       }
-      else {
-        var group = TIME_TABLE[hours.toString()];
-        var eventMessage = '';
 
-        if (date.getTime() < event.until.getTime()) {
-          eventMessage = this.createEventMessage(date);
-        }
-
-        if (group != null) {
-          var groupString = locale.groupTable[group][pattern];
-          message = sprintf(locale.startSoon, {
-            hours: hours,
-            group: groupString,
-            eventMessage: eventMessage
-          });
-        }
+      if (group != null) {
+        var groupString = locale.groupTable[group][pattern];
+        message = sprintf(locale.startSoon, {
+          hours: hours,
+          group: groupString,
+          eventMessage: eventMessage
+        });
       }
+
+      console.log(date.toString(), ' pattern: ', pattern, ' ', message);
+
+      return message;
+    },
+
+    /**
+     * 日毎のメッセージを作成する
+     * @return {string} メッセージ。
+     */
+    createDailyMessage: function(date) {
+      var message,
+          pattern = this.getPattern(date);
+
+      message = locale.scheduleMessages[pattern] + locale.weekDayMessages[date.getDay()];
 
       console.log(date.toString(), ' pattern: ', pattern, ' ', message);
 

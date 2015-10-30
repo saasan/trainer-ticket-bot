@@ -2,9 +2,9 @@ var url = 'http://saasan.github.io/imas/trainer-ticket-time/';
 
 exports.month = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
-exports.countdownDay = 'イベント「%(eventName)s」終了まであと%(left)d日(%(month)s/%(date)d %(hour)d:%(minute)dまで)';
-exports.countdownHour = 'イベント「%(eventName)s」終了まであと%(left)d時間(%(month)s/%(date)d %(hour)d:%(minute)dまで)';
-exports.countdownMinute = 'イベント「%(eventName)s」終了まであと%(left)d分くらい(%(month)s/%(date)d %(hour)d:%(minute)dまで)';
+exports.countdownDay = '%(eventName)sまであと%(left)d日(%(month)s/%(date)d %(hour)d:%(minute)02d)';
+exports.countdownHour = '%(eventName)sまであと%(left)d時間(%(month)s/%(date)d %(hour)d:%(minute)02d)';
+exports.countdownMinute = '%(eventName)sまであと%(left)d分くらい(%(month)s/%(date)d %(hour)d:%(minute)02d)';
 
 exports.scheduleMessages = [
 // パターンA
