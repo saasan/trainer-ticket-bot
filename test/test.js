@@ -308,24 +308,32 @@ describe('22時', function() {
 describe('イベントメッセージ', function() {
   var message;
 
+  it('あと3日', function () {
+    message = twitter.createHourlyMessage(new Date(2015, month.NOVEMBER, 5, 20, 50));
+    assert(message.includes('イベント「LIVE Groove Vocal burst」終了まであと3日(11/8 20:59)'));
+  });
+  it('あと2日', function () {
+    message = twitter.createHourlyMessage(new Date(2015, month.NOVEMBER, 6, 20, 50));
+    assert(message.includes('イベント「LIVE Groove Vocal burst」終了まであと2日(11/8 20:59)'));
+  });
   it('あと1日', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.OCTOBER, 30, 13, 50));
-    assert(message.includes('イベント「LIVE Groove Vocal burst」開催まであと1日(10/31 15:00)'));
+    message = twitter.createHourlyMessage(new Date(2015, month.NOVEMBER, 7, 19, 50));
+    assert(message.includes('イベント「LIVE Groove Vocal burst」終了まであと1日(11/8 20:59)'));
   });
   it('あと24時間', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.OCTOBER, 30, 14, 50));
-    assert(message.includes('イベント「LIVE Groove Vocal burst」開催まであと24時間(10/31 15:00)'));
+    message = twitter.createHourlyMessage(new Date(2015, month.NOVEMBER, 7, 20, 50));
+    assert(message.includes('イベント「LIVE Groove Vocal burst」終了まであと24時間(11/8 20:59)'));
   });
   it('あと1時間', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.OCTOBER, 31, 13, 50));
-    assert(message.includes('イベント「LIVE Groove Vocal burst」開催まであと1時間(10/31 15:00)'));
+    message = twitter.createHourlyMessage(new Date(2015, month.NOVEMBER, 8, 19, 50));
+    assert(message.includes('イベント「LIVE Groove Vocal burst」終了まであと1時間(11/8 20:59)'));
   });
   it('あと10分', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.OCTOBER, 31, 14, 50, 10));
-    assert(message.includes('イベント「LIVE Groove Vocal burst」開催まであと10分くらい(10/31 15:00)'));
+    message = twitter.createHourlyMessage(new Date(2015, month.NOVEMBER, 8, 20, 50, 10));
+    assert(message.includes('イベント「LIVE Groove Vocal burst」終了まであと10分くらい(11/8 20:59)'));
   });
   it('終了', function () {
-    message = twitter.createHourlyMessage(new Date(2015, month.OCTOBER, 31, 18, 50));
+    message = twitter.createHourlyMessage(new Date(2015, month.NOVEMBER, 8, 21, 50));
     assert(!message.includes('イベント'));
   });
 });
