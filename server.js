@@ -7,9 +7,16 @@
   var twitter = require('./twitter.js');
 
   // サーバーの動作開始時間
-  var START_TIME = 7;
+  var START_TIME = {
+    hour: 6,
+    minute: 55
+  };
   // サーバーの動作終了時間
-  var STOP_TIME = 24;
+  var STOP_TIME = {
+    hour: 23,
+    minute: 45
+  };
+
 
   var jobHourlyTweet, jobWeekDayTweet, jobTimeTableTweet, jobCurl;
 
@@ -22,23 +29,39 @@
   function cancelJobs() {
     console.log('========== function cancelJobs ==========');
     jobHourlyTweet.cancel();
-    jobWeekDayTweet.cancel();
     jobTimeTableTweet.cancel();
     jobCurl.cancel();
   }
 
   /**
+   * 今日の指定時刻のgetTime()を返す
+   * @return {number} getTime()で取得したミリ秒。
+   */
+  function getSpecifiedTime(hour, minute) {
+    var d = new Date();
+    d.setHours(hour);
+    d.setMinutes(minute);
+    d.setSeconds(0);
+    d.setMilliseconds(0);
+
+    return d.getTime();
+  }
+
+  /**
    * サーバーを実行すべき時間内か調べる
+   * @param date 調べる時間のDateオブジェクト
    * @return {boolean} 時間内ならtrue。
    */
-  function isInTime(hours) {
-    return (START_TIME <= hours && hours < STOP_TIME);
+  function isInTime(date) {
+    var now = date.getTime();
+    var start = getSpecifiedTime(START_TIME.hour, START_TIME.minute);
+    var stop = getSpecifiedTime(STOP_TIME.hour, STOP_TIME.minute);
+
+    return (start <= now && now < stop);
   }
 
   process.on('exit', function() {
     console.log('========== process.on Exit ==========');
-    // ジョブをキャンセル
-    cancelJobs();
   });
 
   // 毎時50分にトレチケタイムをツイートする
@@ -49,6 +72,8 @@
   // 毎日0時0分に曜日毎のツイートをする
   jobWeekDayTweet = schedule.scheduleJob('0 0 * * *', function() {
     twitter.tweetWeekDayMessage();
+    // 0時0分のツイートで1日分終わりなので自分でキャンセル
+    jobWeekDayTweet.cancel();
   });
 
   // 毎日7時45分に今日の予定をツイートする
@@ -56,11 +81,9 @@
     twitter.tweetTimeTableMessage();
   });
 
-  // 15分毎にcurlで自分を叩き起こす
-  jobCurl = schedule.scheduleJob('*/15 * * * *', function() {
-    var hours = (new Date()).getHours();
-
-    if (isInTime(hours)) {
+  // 20分毎にcurlで自分を叩き起こす
+  jobCurl = schedule.scheduleJob('0,20,40 * * * *', function() {
+    if (isInTime(new Date())) {
       // 時間内なら自分を叩く
       curl(process.env.KEEP_ALIVE_URL);
     }
@@ -75,8 +98,7 @@
     response.writeHead(404, {'Content-Type': 'text/html'});
     response.end('<!DOCTYPE html><head><title>404 Not Found</title></head><body><h1>404 Not Found</h1></body>\n');
 
-    var hours = (new Date()).getHours();
-    if (!isInTime(hours)) {
+    if (!isInTime(new Date())) {
       // 時間外ならジョブをキャンセル
       cancelJobs();
     }
