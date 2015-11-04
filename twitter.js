@@ -55,8 +55,16 @@
       }
     },
 
-    tweetDailyMessage: function() {
-      var message = this.createDailyMessage(new Date());
+    tweetWeekDayMessage: function() {
+      var message = this.createWeekDayMessage(new Date());
+
+      if (message != null) {
+        this.tweet(message);
+      }
+    },
+
+    tweetTimeTableMessage: function() {
+      var message = this.createTimeTableMessage(new Date());
 
       if (message != null) {
         this.tweet(message);
@@ -164,14 +172,31 @@
     },
 
     /**
-     * 日毎のメッセージを作成する
+     * 指定された日付の曜日メッセージを作成する
+     * @param date 日付
      * @return {string} メッセージ。
      */
-    createDailyMessage: function(date) {
+    createWeekDayMessage: function(date) {
+      var message,
+          weekDay = date.getDay();
+
+      message = locale.weekDayMessages[weekDay];
+
+      console.log(date.toString(), ' weekDay: ', weekDay, ' ', message);
+
+      return message;
+    },
+
+    /**
+     * 指定された日付の予定メッセージを作成する
+     * @param date 日付
+     * @return {string} メッセージ。
+     */
+    createTimeTableMessage: function(date) {
       var message,
           pattern = this.getPattern(date);
 
-      message = locale.scheduleMessages[pattern] + locale.weekDayMessages[date.getDay()];
+      message = locale.scheduleMessages[pattern];
 
       console.log(date.toString(), ' pattern: ', pattern, ' ', message);
 
