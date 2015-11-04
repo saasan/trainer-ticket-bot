@@ -7,11 +7,11 @@
   var twitter = require('./twitter.js');
 
   // サーバーの動作開始時間
-  var START_TIME = 6;
+  var START_TIME = 7;
   // サーバーの動作終了時間
-  var STOP_TIME = 22;
+  var STOP_TIME = 24;
 
-  var jobHourlyTweet, jobDailyTweet, jobCurl;
+  var jobHourlyTweet, jobWeekDayTweet, jobTimeTableTweet, jobCurl;
 
   function curl(url) {
     console.log('========== function curl ==========');
@@ -22,7 +22,8 @@
   function cancelJobs() {
     console.log('========== function cancelJobs ==========');
     jobHourlyTweet.cancel();
-    jobDailyTweet.cancel();
+    jobWeekDayTweet.cancel();
+    jobTimeTableTweet.cancel();
     jobCurl.cancel();
   }
 
@@ -40,14 +41,19 @@
     cancelJobs();
   });
 
-  // 毎時50分にお知らせツイートする
+  // 毎時50分にトレチケタイムをツイートする
   jobHourlyTweet = schedule.scheduleJob('50 7-14,18-21 * * *', function() {
     twitter.tweetHourlyMessage();
   });
 
-  // 毎日7時30分にお知らせツイートする
-  jobDailyTweet = schedule.scheduleJob('30 7 * * *', function() {
-    twitter.tweetDailyMessage();
+  // 毎日0時0分に曜日毎のツイートをする
+  jobWeekDayTweet = schedule.scheduleJob('0 0 * * *', function() {
+    twitter.tweetWeekDayMessage();
+  });
+
+  // 毎日7時45分に今日の予定をツイートする
+  jobTimeTableTweet = schedule.scheduleJob('45 7 * * *', function() {
+    twitter.tweetTimeTableMessage();
   });
 
   // 15分毎にcurlで自分を叩き起こす
