@@ -4,6 +4,10 @@ var assert = require('assert');
 var twitter = require('../twitter.js');
 var month = require('../month.js');
 
+process.env.EVENT_NAME='イベント「LIVE Groove Vocal burst」終了';
+process.env.EVENT_DATE='2015-11-08T21:00:00+09:00';
+process.env.EVENT_CLOSE='true';
+
 describe('日毎', function() {
   var message;
 

@@ -28,3 +28,10 @@
 - `TWITTER_ACCESS_TOKEN`  
 - `TWITTER_ACCESS_TOKEN_SECRET`  
   Twitterアカウントのアクセストークン
+- `EVENT_NAME`  
+  イベント名
+- `EVENT_DATE`  
+  イベント開始/終了日時。15:00開始なら15:00、20:59終了なら21:00に設定。
+  [ISO 8601](https://ja.wikipedia.org/wiki/ISO_8601) で書くこと。
+- `EVENT_CLOSE`  
+  イベント終了なら"true"、終了なら"true"以外

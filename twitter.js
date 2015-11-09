@@ -5,7 +5,6 @@
   var sprintf = require('sprintf-js').sprintf;
   var locale = require('./ja.js');
   var month = require('./month.js');
-  var event = require('./event.js');
 
   var MS_SEPTEMBER7 = (new Date(2015, month.SEPTEMBER, 7)).getTime(),
       MS_ONE_MINUTE = 60 * 1000,
@@ -97,14 +96,14 @@
 
     createEventMessage: function(date) {
       var msDate = date.getTime(),
-          msEventDate = event.date.getTime(),
+          msEventDate = Date.parse(process.env.EVENT_DATE),
           msRoundDate = this.roundHours(date).getTime(),
           delta, left, template, eventMessage;
 
       // メッセージ表示用の時刻
       var until = new Date(msEventDate);
       // 終了時刻の場合は1分前を計算
-      if (event.close) {
+      if (process.env.EVENT_CLOSE === 'true') {
         until.setMinutes(until.getMinutes() - 1);
       }
 
@@ -131,7 +130,7 @@
       }
 
       eventMessage = sprintf(template + '\n', {
-        eventName: event.name,
+        eventName: process.env.EVENT_NAME,
         left: left,
         month: locale.month[until.getMonth()],
         date: until.getDate(),
@@ -153,7 +152,7 @@
           group = TIME_TABLE[hours.toString()],
           eventMessage = '';
 
-      if (date.getTime() < event.date.getTime()) {
+      if (date.getTime() < Date.parse(process.env.EVENT_DATE)) {
         eventMessage = this.createEventMessage(date);
       }
 
