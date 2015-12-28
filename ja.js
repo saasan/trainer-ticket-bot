@@ -55,6 +55,7 @@ exports.weekDayMessages = [
 ススメ☆オトメ ～jewel parade～ (全タイプ)
 アタシポンコツアンドロイド
 Nation Blue
+Orange Sapphire
 【ボーナスデー】
 共通アイテム&マニー2倍
 ${ url }`,
@@ -64,6 +65,7 @@ ${ url }`,
 ススメ☆オトメ ～jewel parade～ (全タイプ)
 アタシポンコツアンドロイド
 Nation Blue
+Orange Sapphire
 【ボーナスデー】
 全属性アイテム
 ${ url }`,
@@ -73,6 +75,7 @@ ${ url }`,
 ススメ☆オトメ ～jewel parade～ (全タイプ)
 アタシポンコツアンドロイド
 Nation Blue
+Orange Sapphire
 【ボーナスデー】
 共通アイテム(ドレス、靴)
 ${ url }`,
@@ -96,6 +99,7 @@ ${ url }`,
 `金曜日になりました。今日の限定曲とボーナスデーはこちら！
 【限定曲】
 ススメ☆オトメ ～jewel parade～ (パッション)
+Orange Sapphire
 【ボーナスデー】
 パッションアイテム
 ${ url }`,
@@ -105,6 +109,7 @@ ${ url }`,
 ススメ☆オトメ ～jewel parade～ (全タイプ)
 アタシポンコツアンドロイド
 Nation Blue
+Orange Sapphire
 【ボーナスデー】
 全属性アイテム&マニー2倍
 ${ url }`
