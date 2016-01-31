@@ -25,9 +25,9 @@
     exec('curl ' + url, function(){});
   }
 
-  // ジョブをキャンセル
-  function cancelJobs() {
-    console.log('========== function cancelJobs ==========');
+  // ジョブを停止
+  function stopJobs() {
+    console.log('========== function stopJobs ==========');
     jobHourlyTweet.stop();
     jobWeekDayTweet.stop();
     jobTimeTableTweet.stop();
@@ -74,7 +74,7 @@
   // 毎日0時0分に曜日毎のツイートをする
   jobWeekDayTweet = new CronJob('0 0 0 * * *', function() {
     twitter.tweetWeekDayMessage();
-    // 0時0分のツイートで1日分終わりなので自分でキャンセル
+    // 0時0分のツイートで1日分終わりなので自分で停止
     jobWeekDayTweet.stop();
   });
   jobWeekDayTweet.start();
@@ -92,8 +92,8 @@
       curl(process.env.KEEP_ALIVE_URL);
     }
     else {
-      // それ以外はジョブをキャンセル
-      cancelJobs();
+      // それ以外はジョブを停止
+      stopJobs();
     }
   });
   jobCurl.start();
@@ -104,8 +104,8 @@
     response.end('<!DOCTYPE html><head><title>404 Not Found</title></head><body><h1>404 Not Found</h1></body>\n');
 
     if (!isInTime(new Date())) {
-      // 時間外ならジョブをキャンセル
-      cancelJobs();
+      // 時間外ならジョブを停止
+      stopJobs();
     }
   }).listen(process.env.PORT);
 })();
