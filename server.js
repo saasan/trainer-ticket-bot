@@ -3,7 +3,7 @@
 
   var http = require('http');
   var exec = require('child_process').exec;
-  var schedule = require('node-schedule');
+  var CronJob = require('cron').CronJob;
   var twitter = require('./twitter.js');
 
   // サーバーの動作開始時間
@@ -28,9 +28,9 @@
   // ジョブをキャンセル
   function cancelJobs() {
     console.log('========== function cancelJobs ==========');
-    jobHourlyTweet.cancel();
-    jobTimeTableTweet.cancel();
-    jobCurl.cancel();
+    jobHourlyTweet.stop();
+    jobTimeTableTweet.stop();
+    jobCurl.stop();
   }
 
   /**
@@ -65,24 +65,27 @@
   });
 
   // 毎時50分にトレチケタイムをツイートする
-  jobHourlyTweet = schedule.scheduleJob('50 7-14,18-21 * * *', function() {
+  jobHourlyTweet = new CronJob('0 50 7-14,18-21 * * *', function() {
     twitter.tweetHourlyMessage();
   });
+  jobHourlyTweet.start();
 
   // 毎日0時0分に曜日毎のツイートをする
-  jobWeekDayTweet = schedule.scheduleJob('0 0 * * *', function() {
+  jobWeekDayTweet = new CronJob('0 0 0 * * *', function() {
     twitter.tweetWeekDayMessage();
     // 0時0分のツイートで1日分終わりなので自分でキャンセル
-    jobWeekDayTweet.cancel();
+    jobWeekDayTweet.stop();
   });
+  jobWeekDayTweet.start();
 
   // 毎日7時45分に今日の予定をツイートする
-  jobTimeTableTweet = schedule.scheduleJob('45 7 * * *', function() {
+  jobTimeTableTweet = new CronJob('0 45 7 * * *', function() {
     twitter.tweetTimeTableMessage();
   });
+  jobTimeTableTweet.start();
 
   // 20分毎にcurlで自分を叩き起こす
-  jobCurl = schedule.scheduleJob('0,20,40 * * * *', function() {
+  jobCurl = new CronJob('0 0,20,40 * * * *', function() {
     if (isInTime(new Date())) {
       // 時間内なら自分を叩く
       curl(process.env.KEEP_ALIVE_URL);
@@ -92,6 +95,7 @@
       cancelJobs();
     }
   });
+  jobCurl.start();
 
   // ダミーのhttpサーバーを動かしておく
   http.createServer(function(request, response) {
