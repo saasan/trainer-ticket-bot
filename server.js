@@ -29,7 +29,6 @@
   function stopJobs() {
     console.log('========== function stopJobs ==========');
     jobHourlyTweet.stop();
-    jobWeekDayTweet.stop();
     jobTimeTableTweet.stop();
     jobCurl.stop();
   }
