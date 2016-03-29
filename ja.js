@@ -52,40 +52,43 @@ exports.weekDayMessages = [
 // 日
 `日曜日
 【限定曲】
-ススメ☆オトメ ～jewel parade～ (全タイプ)
+ススメ☆オトメ(全)
 アタシポンコツアンドロイド
 Nation Blue
 Orange Sapphire
-ゴキゲンParty Night (全タイプ)
+ゴキゲンParty Night(全)
 パステルピンクな恋
+オルゴールの小箱
 【ボーナスデー】
 共通アイテム&マニー2倍`,
 // 月
 `月曜日
 【限定曲】
-ススメ☆オトメ ～jewel parade～ (全タイプ)
+ススメ☆オトメ(全)
 アタシポンコツアンドロイド
 Nation Blue
 Orange Sapphire
-ゴキゲンParty Night (全タイプ)
+ゴキゲンParty Night(全)
 パステルピンクな恋
+オルゴールの小箱
 【ボーナスデー】
 全属性アイテム`,
 // 火
 `火曜日
 【限定曲】
-ススメ☆オトメ ～jewel parade～ (全タイプ)
+ススメ☆オトメ(全)
 アタシポンコツアンドロイド
 Nation Blue
 Orange Sapphire
-ゴキゲンParty Night (全タイプ)
+ゴキゲンParty Night(全)
 パステルピンクな恋
+オルゴールの小箱
 【ボーナスデー】
 共通アイテム(ドレス、靴)`,
 // 水
 `水曜日
 【限定曲】
-ススメ☆オトメ ～jewel parade～ (キュート)
+ススメ☆オトメ (キュート)
 アタシポンコツアンドロイド
 ゴキゲンParty Night (キュート)
 パステルピンクな恋
@@ -94,15 +97,16 @@ Orange Sapphire
 // 木
 `木曜日
 【限定曲】
-ススメ☆オトメ ～jewel parade～ (クール)
+ススメ☆オトメ (クール)
 Nation Blue
 ゴキゲンParty Night (クール)
+オルゴールの小箱
 【ボーナスデー】
 クールアイテム`,
 // 金
 `金曜日
 【限定曲】
-ススメ☆オトメ ～jewel parade～ (パッション)
+ススメ☆オトメ (パッション)
 Orange Sapphire
 ゴキゲンParty Night (パッション)
 【ボーナスデー】
@@ -110,12 +114,13 @@ Orange Sapphire
 // 土
 `土曜日
 【限定曲】
-ススメ☆オトメ ～jewel parade～ (全タイプ)
+ススメ☆オトメ(全)
 アタシポンコツアンドロイド
 Nation Blue
 Orange Sapphire
-ゴキゲンParty Night (全タイプ)
+ゴキゲンParty Night(全)
 パステルピンクな恋
+オルゴールの小箱
 【ボーナスデー】
 全属性アイテム&マニー2倍`
 ];
