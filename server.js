@@ -52,7 +52,7 @@
    * @param date 調べる時間のDateオブジェクト
    * @return {boolean} 時間内ならtrue。
    */
-  function isInTime(date) {
+  function isWithinTime(date) {
     var now = date.getTime();
     var start = getSpecifiedTime(START_TIME.hour, START_TIME.minute);
     var stop = getSpecifiedTime(STOP_TIME.hour, STOP_TIME.minute);
@@ -86,7 +86,7 @@
 
   // 20分毎にcurlで自分を叩き起こす
   jobCurl = new CronJob('0 0,20,40 * * * *', function() {
-    if (isInTime(new Date())) {
+    if (isWithinTime(new Date())) {
       // 時間内なら自分を叩く
       curl(process.env.KEEP_ALIVE_URL);
     }
@@ -102,7 +102,7 @@
     response.writeHead(404, {'Content-Type': 'text/html'});
     response.end('<!DOCTYPE html><head><title>404 Not Found</title></head><body><h1>404 Not Found</h1></body>\n');
 
-    if (!isInTime(new Date())) {
+    if (!isWithinTime(new Date())) {
       // 時間外ならジョブを停止
       stopJobs();
     }
